@@ -1,27 +1,43 @@
-
-# 将一个文本文件中的内容做替换，并且更新该文件
+# coding=gb2312
+# -*- coding: gb2312 -*-
 import argparse
 import sys
 import re
 
-if len(sys.argv) == 1:
-    sys.argv.append('--help')
-parser = argparse.ArgumentParser()
+file_name = 'xxx'
 
 
-file_object = open(sys.argv[1],'r+')
+#if no argv use file
+if len(sys.argv) == 2:
+	file_name = sys.argv[1]
+
+file_object = open(file_name,'r+')
+
 try:
      all_the_text = file_object.read( )
 finally:
      file_object.close( )
 
 # print(all_the_text)
-all_the_text=re.sub(r'(\d+)px',"unit(\g<1>px)",all_the_text)
+def strToDoubleStr(matched):
+    intStr = matched.group("number")
+    print(intStr)
+    resultStr = int(intStr.replace('px',''))*2
+    print(resultStr)
+    resultStr = 'unit('+str(resultStr)+'px)'
+    return resultStr
+    # print(intStr)
+    # return addedValueStr;
+    # return
 
-print(all_the_text)
+all_the_text=re.sub(r'(?P<number>(\d+)px)',strToDoubleStr,all_the_text)
+
 
 file_object.close()
-file_object = open(sys.argv[1],'w+')
+file_object = open(file_name,'w+')
 
 file_object.write(all_the_text)
 
+file_object.close()
+print(all_the_text)
+print(file_name+'     success')
