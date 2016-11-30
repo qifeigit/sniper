@@ -1,5 +1,8 @@
+#将文件中的数字转化为unit(数字)
+#已知问题，无法转化小数和负数
 # coding=gb2312
 # -*- coding: gb2312 -*-
+#
 import argparse
 import sys
 import re
